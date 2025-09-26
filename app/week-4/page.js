@@ -29,8 +29,8 @@ export default function Page() {
         <div style={{display: "flex", alignItems: "center", gap: "10px"}}>
             <span className="mx-2">{quantity}</span>
             <div>
-                <button ClassName="inc-button" style={{borderRadius: "10px", backgroundColor: "green", margin: "10px"}} onClick={incrementQuantity}>Increase</button>
-                <button ClassName="dec-button" style={{borderRadius: "10px", backgroundColor: "red", margin: "10px"}} onClick={decrementQuantity}>Decrease</button>
+                <button className="inc-button" style={{borderRadius: "10px", backgroundColor: "green", margin: "10px"}} onClick={incrementQuantity}>Increase</button>
+                <button className="dec-button" style={{borderRadius: "10px", backgroundColor: "red", margin: "10px"}} onClick={decrementQuantity}>Decrease</button>
             </div>
         </div>
 
