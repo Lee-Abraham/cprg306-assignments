@@ -15,7 +15,7 @@ export default function Page() {
     }
 
     function decrementQuantity() {
-        if (quantity >= 1) {
+        if (quantity > 1) {
             setQuantity(quantity - 1);
         }
         else {
@@ -29,8 +29,8 @@ export default function Page() {
         <div style={{display: "flex", alignItems: "center", gap: "10px"}}>
             <span className="mx-2">{quantity}</span>
             <div>
-                <button Classname="inc-button" style={{borderRadius: "10px", backgroundColor: "green", margin: "10px"}} onClick={incrementQuantity}>Increase</button>
-                <button Classname="dec-button" style={{borderRadius: "10px", backgroundColor: "red", margin: "10px"}} onClick={decrementQuantity}>Decrease</button>
+                <button ClassName="inc-button" style={{borderRadius: "10px", backgroundColor: "green", margin: "10px"}} onClick={incrementQuantity}>Increase</button>
+                <button ClassName="dec-button" style={{borderRadius: "10px", backgroundColor: "red", margin: "10px"}} onClick={decrementQuantity}>Decrease</button>
             </div>
         </div>
 
