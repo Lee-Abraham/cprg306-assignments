@@ -1,5 +1,5 @@
 "use client";
-import NewItem from './components/NewItem';
+import NewItem from './new-item';
 import {useState} from 'react';
 
 export default function Page() {
