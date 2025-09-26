@@ -7,6 +7,7 @@ export default function Page() {
 
   return (
     <main className="flex flex-col items-center text-center p-6">
+        <NewItem />
         <div style={{display: "flex", alignItems: "center", gap: "10px"}}>
             <span className="mx-2">{quantity}</span>
             <div>
