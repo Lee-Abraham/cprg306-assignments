@@ -1,6 +1,5 @@
 import ItemList from './item-list';
 import Item from './item';
-
 export default function Page() {
   return (
     <main className="flex flex-col items-center text-center p-6">
