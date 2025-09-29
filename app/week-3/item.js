@@ -1,5 +1,5 @@
-export default function Item({name, quantity, category}) {
-
+export default function Item({item}) {
+const {name, quantity, category } = item;
   return (
     <main>
     <ul>
