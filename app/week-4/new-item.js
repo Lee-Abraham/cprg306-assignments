@@ -24,7 +24,6 @@ export default function NewItem() {
 
   return (
     <main className="flex flex-col items-center text-center p-6">
-        <NewItem />
                 <div className="flex flex-col items-center gap-2 bg-white rounded-[10px] p-4 shadow-lg mt-6">
                         <span className="mx-2 text-5xl font-bold mb-4 text-black">{quantity}</span>
                         <div className="flex gap-2 px-4">
