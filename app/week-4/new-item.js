@@ -9,7 +9,7 @@ export default function NewItem() {
             setQuantity(quantity + 1);
         }
         else {
-            alert("Quantity cannot be more than 20");
+            button.disabled = true;
         }
     }
 
@@ -18,7 +18,7 @@ export default function NewItem() {
             setQuantity(quantity - 1);
         }
         else {
-            alert("Quantity cannot be less than 1");
+            button.disabled = true;
         }
     }
 
