@@ -1,6 +1,4 @@
 import ItemList from './item-list';
-//Should not be using Item here since its already used on ItemList
-// import Item from './item';
 
 export default function Page() {
   return (
