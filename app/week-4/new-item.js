@@ -27,7 +27,7 @@ export default function NewItem() {
 
 // Render the component
   return (
-    <main className="flex items-center text-center p-6">
+    <main className="items-center text-center p-6">
         <div className="flex items-center gap-2 bg-white rounded-[10px] p-4 shadow-lg mt-6 size-[10px,10px]">
             <p className="mx-2 text-5xl font-bold mb-4 text-black rounded-[10p]">{quantity}</p>
             <div className="flex gap-2 px-4">
