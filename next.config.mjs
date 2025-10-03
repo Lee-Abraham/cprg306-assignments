@@ -1,8 +1,4 @@
 /** @type {import('next').NextConfig} */
-const nextConfig = {
-  experimental: {
-    webpackBuildWorker: true
-  }
-};
+const nextConfig = {};
 
 export default nextConfig;
