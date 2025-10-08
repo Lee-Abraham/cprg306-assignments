@@ -66,7 +66,7 @@ export default function NewItem() {
             </div>
                 <div className='z-0 absolute ml-80 mb-20'>
                 <button type='submit' className='border m-2 w-50 text-black p-2 rounded-[10px] hover:bg-blue-400'>
-                    submit
+                    Add Item
                 </button>
                 </div>
             </form>
