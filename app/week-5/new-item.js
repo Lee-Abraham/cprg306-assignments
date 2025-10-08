@@ -64,7 +64,7 @@ export default function NewItem() {
                 <span className="text-2xl font-bold text-black border p-2 rounded-[10px] w-12 text-center">{quantity}</span>
                 <button type="button" className="font-bold rounded-[10px] bg-green-600 text-black px-4 py-2 hover:bg-[#006400]" onClick={incrementQuantity}>+</button>
             </div>
-                <div className='z-0 absolute ml-80 mb-20'>
+                <div className='z-0 absolute ml-84 mb-20'>
                 <button type='submit' className='border m-2 w-50 text-black p-2 rounded-[10px] hover:bg-blue-400'>
                     Add Item
                 </button>
