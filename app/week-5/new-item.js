@@ -11,18 +11,12 @@ export default function NewItem() {
         if (quantity < 20) {
             setQuantity(quantity + 1);
         }
-        else {
-            button.disabled = true;
-        }
     }
 
     // Function to handle decrementing the quantity
     function decrementQuantity() {
         if (quantity > 1) {
             setQuantity(quantity - 1);
-        }
-        else {
-            button.disabled = true;
         }
     }
 
