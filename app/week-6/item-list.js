@@ -17,11 +17,11 @@ export default function ItemList() {
 
   const groupedItems = items.reduce((groups, item) => {
     const category =
-      item.category.charAT(0).toUpperCase() + item.category.slice(1);
+      item.category.charAt(0).toUpperCase() + item.category.slice(1);
     if (!groups[category]) {
       groups[category] = [];
     }
-    groups[category].push(items);
+    groups[category].push(item);
     return groups;
   });
 
