@@ -4,14 +4,16 @@ export default function Home() {
   return (
     <main className="flex flex-col">
       <h1> CPRG 306: Web Development 2 - Assignments</h1>
-      <br/>
+      <br />
       <Link href="./week-2">Week-2 CPRG306 Assignment</Link>
-      <br/>
+      <br />
       <Link href="./week-3">Week-3 CPRG306 Assignment</Link>
-      <br/>
+      <br />
       <Link href="./week-4">Week-4 CPRG306 Assignment</Link>
-      <br/>
+      <br />
       <Link href="./week-5">Week-5 CPRG306 Assignment</Link>
+      <br />
+      <Link href="./week-6">Week-6 CPRG306 Assignment</Link>
     </main>
   );
 }
