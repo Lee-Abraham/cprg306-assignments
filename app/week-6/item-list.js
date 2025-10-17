@@ -11,9 +11,17 @@ export default function ItemList() {
 
   // SORT ITEMS
   if (sortBy === "name") {
-    items.sort((a, b) => a.name.localeCompare(b.name));
+    items.sort((a, b) => {
+      if (a.name > b.name) return 1;
+      if (a.name < b.name) return -1;
+      return 0;
+    });
   } else if (sortBy === "category") {
-    items.sort((a, b) => a.category.localeCompare(b.category));
+    items.sort((a, b) => {
+      if (a.category > b.category) return 1;
+      if (a.category < b.category) return -1;
+      return 0;
+    });
   }
 
   // GROUP BY CATEGORY
@@ -84,7 +92,11 @@ export default function ItemList() {
                 </h2>
                 <ul>
                   {groupedItems[category]
-                    .sort((a, b) => a.name.localeCompare(b.name))
+                    .sort((a, b) => {
+                      if (a.name > b.name) return 1;
+                      if (a.name < b.name) return -1;
+                      return 0;
+                    })
                     .map((item) => (
                       <Item key={item.id} item={item} />
                     ))}
