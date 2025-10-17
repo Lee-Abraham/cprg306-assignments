@@ -2,14 +2,11 @@ export default function Item({ item }) {
   const { name, quantity, category } = item;
 
   return (
-    <main>
-      <ul>
-        <li className="bg-amber-800 text-white border-2 border-amber-600 rounded-md p-4 hover:bg-amber-600 transition duration-200">
-          <p className="text-xl font-semibold">{name}</p>
-          <p className="text-md">Quantity: {quantity}</p>
-          <p className="text-md capitalize">Category: {category}</p>
-        </li>
-      </ul>
-    </main>
+    <li className="list-none bg-gray-800 border-2 border-gray-700 rounded-md p-3 cursor-pointer mt-3 text-left text-white">
+      <p className="text-2xl font-bold">{name}</p>
+      <p className="text-lg">
+        Buy {quantity} in {category}
+      </p>
+    </li>
   );
 }
