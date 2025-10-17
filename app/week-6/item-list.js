@@ -79,7 +79,7 @@ export default function ItemList() {
                 className="mb-6 bg-white rounded-lg shadow p-4 pt-6 relative"
               >
                 {/* CATEGORY NAME */}
-                <h2 className=" capitalize absolute top-2 left-4 text-xs font-semibold text-blue-500 bg-white px-2 py-0.5 rounded">
+                <h2 className=" capitalize absolute top-2 left-4 text-l font-semibold text-blue-800 bg-white px-2 py-0.5 rounded">
                   {category}
                 </h2>
                 <ul>
