@@ -1,57 +1,47 @@
 "use client";
-
 import { useState } from "react";
 import Item from "./item";
-import itemsData from "./items.json";
 
-export default function ItemList() {
+export default function ItemList({ items }) {
   const [sortBy, setSortBy] = useState("name");
-
-  let items = [...itemsData];
+  let sortedItems = [...items];
 
   // SORT ITEMS
   if (sortBy === "name") {
-    items.sort((a, b) => {
+    sortedItems.sort((a, b) => {
       if (a.name > b.name) return 1;
       if (a.name < b.name) return -1;
       return 0;
     });
   } else if (sortBy === "category") {
-    items.sort((a, b) => {
+    sortedItems.sort((a, b) => {
       if (a.category > b.category) return 1;
       if (a.category < b.category) return -1;
       return 0;
     });
   }
 
-  // GROUP BY CATEGORY
-  const groupedItems =
-    sortBy === "group"
-      ? items.reduce((groups, item) => {
-          const category = item.category;
-          if (!groups[category]) {
-            groups[category] = [];
-          }
-          groups[category].push(item);
-          return groups;
-        }, {})
-      : null;
-
   return (
-    <section className="flex flex-col items-center">
+    <section className="flex flex-col items-center w-full max-w-xl">
+      {/* FOR LISTS OF THE ITEMS */}
+      <ul className="w-full space-y-4">
+        {sortedItems.map((item) => (
+          <Item key={item.id} item={item} />
+        ))}
+      </ul>
+
       {/* SORT BUTTONS */}
-      <div className="flex gap-3 mb-6">
+      <div className="flex gap-3 mt-6 mb-6">
         <button
           onClick={() => setSortBy("name")}
           className={`px-4 py-2 rounded-md font-semibold transition ${
             sortBy === "name"
-              ? "bg-amber-800 text-white"
+              ? "bg-yellow-500 text-black"
               : "bg-gray-300 hover:bg-gray-400"
           }`}
         >
           Sort by Name
         </button>
-
         <button
           onClick={() => setSortBy("category")}
           className={`px-4 py-2 rounded-md font-semibold transition ${
@@ -62,54 +52,6 @@ export default function ItemList() {
         >
           Sort by Category
         </button>
-
-        <button
-          onClick={() => setSortBy("group")}
-          className={`px-4 py-2 rounded-md font-semibold transition ${
-            sortBy === "group"
-              ? "bg-yellow-500 text-white"
-              : "bg-gray-300 hover:bg-gray-400"
-          }`}
-        >
-          Group by Category
-        </button>
-      </div>
-
-      {/* FOR LISTS OF THE ITEMS */}
-      <div className="w-full max-w-xl">
-        {sortBy === "group" ? (
-          // Grouped View
-          Object.keys(groupedItems)
-            .sort()
-            .map((category) => (
-              <div
-                key={category}
-                className="mb-6 bg-white rounded-lg shadow p-4 pt-6 relative"
-              >
-                {/* CATEGORY NAME */}
-                <h2 className=" capitalize absolute top-2 left-4 text-l font-semibold text-blue-800 bg-white px-2 py-0.5 rounded">
-                  {category}
-                </h2>
-                <ul>
-                  {groupedItems[category]
-                    .sort((a, b) => {
-                      if (a.name > b.name) return 1;
-                      if (a.name < b.name) return -1;
-                      return 0;
-                    })
-                    .map((item) => (
-                      <Item key={item.id} item={item} />
-                    ))}
-                </ul>
-              </div>
-            ))
-        ) : (
-          <ul>
-            {items.map((item) => (
-              <Item key={item.id} item={item} />
-            ))}
-          </ul>
-        )}
       </div>
     </section>
   );
