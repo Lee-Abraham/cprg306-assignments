@@ -4,111 +4,111 @@ import { useState } from "react";
 export default function NewItem({ onAddItem }) {
   const [quantity, setQuantity] = useState(1);
   const [name, setName] = useState("");
-  const [category, setCategory] = useState("Produce");
+  const [category, setCategory] = useState("produce");
 
-  // Increment quantity
   function incrementQuantity() {
-    if (quantity < 20) {
-      setQuantity(quantity + 1);
-    }
+    if (quantity < 20) setQuantity(quantity + 1);
   }
 
-  // Decrement quantity
   function decrementQuantity() {
-    if (quantity > 1) {
-      setQuantity(quantity - 1);
-    }
+    if (quantity > 1) setQuantity(quantity - 1);
   }
 
-  // Submit handler
   const handleSubmit = (e) => {
     e.preventDefault();
     const item = {
-      id: Date.now().toString() + Math.floor(Math.random() * 1000).toString(),
+      id: Date.now().toString(),
       name,
       quantity,
-      category: category.toLowerCase(),
+      category,
     };
     onAddItem(item);
     setName("");
     setQuantity(1);
-    setCategory("Produce");
+    setCategory("produce");
   };
 
   return (
-    <main className="flex justify-center items-center">
-      <div className="bg-white rounded-[10px] p-10 shadow-lg mt-6 border-black w-full max-w-md">
-        <form onSubmit={handleSubmit} className="text-black">
+    <form
+      onSubmit={handleSubmit}
+      className="w-full max-w-sm bg-black p-4 rounded-md shadow-md"
+    >
+      {/* NAME OF THE ITEM */}
+      <input
+        type="text"
+        id="name"
+        placeholder="Item Name"
+        className="w-full mb-4 p-2 rounded-md bg-white text-black border"
+        value={name}
+        onChange={(e) => setName(e.target.value)}
+        required
+      />
+
+      {/* FOR QUANTITY + CATEGORY ROW */}
+      <div className="flex gap-3 mb-4 items-center">
+        {/* FOR QUANTITY CONTROL */}
+        <div className="flex items-center gap-1">
+          {/* FOR THE NUMBER BOX */}
           <input
-            type="text"
-            id="name"
-            placeholder="Item Name"
-            className="w-full border rounded-[10px] mb-4 p-2"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            required
+            type="number"
+            value={quantity}
+            readOnly
+            className="w-10 h-10 text-center font-bold text-black border border-gray-400 rounded-md bg-white"
           />
 
-          <select
-            id="category"
-            value={category}
-            onChange={(e) => setCategory(e.target.value)}
-            className="w-full border rounded-[10px] mb-4 p-2"
+          {/* DECREMENT BUTTON */}
+          <button
+            type="button"
+            onClick={decrementQuantity}
+            disabled={quantity === 1}
+            className={`w-10 h-10 rounded-md text-white text-lg font-bold ${
+              quantity === 1
+                ? "bg-gray-300 cursor-not-allowed"
+                : "bg-blue-500 hover:bg-blue-600 cursor-pointer"
+            }`}
           >
-            <option value="Produce">Produce</option>
-            <option value="Dairy">Dairy</option>
-            <option value="Bakery">Bakery</option>
-            <option value="Frozen Foods">Frozen Foods</option>
-            <option value="Canned Goods">Canned Goods</option>
-            <option value="Dry Goods">Dry Goods</option>
-            <option value="Beverages">Beverages</option>
-            <option value="Snacks">Snacks</option>
-            <option value="Household">Household</option>
-            <option value="Other">Other</option>
-          </select>
+            −
+          </button>
 
-          <div className="flex items-center justify-center gap-4 mb-6">
-            <button
-              type="button"
-              onClick={decrementQuantity}
-              disabled={quantity === 1}
-              className={`font-bold rounded-[10px] px-4 py-2 ${
-                quantity === 1
-                  ? "bg-gray-400 cursor-not-allowed"
-                  : "bg-red-600 text-black hover:bg-[#660000] cursor-pointer"
-              }`}
-            >
-              -
-            </button>
+          {/* INCREMENT BUTTON */}
+          <button
+            type="button"
+            onClick={incrementQuantity}
+            disabled={quantity === 20}
+            className={`w-10 h-10 rounded-md text-white text-lg font-bold ${
+              quantity === 20
+                ? "bg-gray-300 cursor-not-allowed"
+                : "bg-blue-500 hover:bg-blue-600 cursor-pointer"
+            }`}
+          >
+            +
+          </button>
+        </div>
 
-            <span className="text-2xl font-bold text-black border p-2 rounded-[10px] w-12 text-center">
-              {quantity}
-            </span>
-
-            <button
-              type="button"
-              onClick={incrementQuantity}
-              disabled={quantity === 20}
-              className={`font-bold rounded-[10px] px-4 py-2 ${
-                quantity === 20
-                  ? "bg-gray-400 cursor-not-allowed"
-                  : "bg-green-600 text-black hover:bg-[#006400] cursor-pointer"
-              }`}
-            >
-              +
-            </button>
-          </div>
-
-          <div className="flex justify-center">
-            <button
-              type="submit"
-              className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-6 rounded-[10px] transition"
-            >
-              Add Item
-            </button>
-          </div>
-        </form>
+        {/* CATEGORY SELECT */}
+        <select
+          id="category"
+          value={category}
+          onChange={(e) => setCategory(e.target.value)}
+          className="flex-1 bg-white text-black p-2 rounded-md border border-gray-500"
+        >
+          <option value="produce">Produce</option>
+          <option value="dairy">Dairy</option>
+          <option value="bakery">Bakery</option>
+          <option value="canned goods">Canned Goods</option>
+          <option value="dry goods">Dry Goods</option>
+          <option value="household">Household</option>
+          <option value="other">Other</option>
+        </select>
       </div>
-    </main>
+
+      {/* ADD ITEM BUTTON */}
+      <button
+        type="submit"
+        className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 rounded-md"
+      >
+        Add Item
+      </button>
+    </form>
   );
 }

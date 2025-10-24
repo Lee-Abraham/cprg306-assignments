@@ -22,9 +22,9 @@ export default function ItemList({ items }) {
   }
 
   return (
-    <section className="flex flex-col items-center w-full max-w-xl">
-      {/* FOR LISTS OF THE ITEMS */}
-      <ul className="w-full space-y-4">
+    <section className="flex flex-col items-center w-full max-w-xl mt-6">
+      {/* LIST OF ITEMS */}
+      <ul className="w-full space-y-2">
         {sortedItems.map((item) => (
           <Item key={item.id} item={item} />
         ))}
@@ -34,21 +34,14 @@ export default function ItemList({ items }) {
       <div className="flex gap-3 mt-6 mb-6">
         <button
           onClick={() => setSortBy("name")}
-          className={`px-4 py-2 rounded-md font-semibold transition ${
-            sortBy === "name"
-              ? "bg-yellow-500 text-black"
-              : "bg-gray-300 hover:bg-gray-400"
-          }`}
+          className="bg-yellow-500 text-black px-4 py-2 rounded-md font-semibold hover:bg-yellow-600"
         >
           Sort by Name
         </button>
+
         <button
           onClick={() => setSortBy("category")}
-          className={`px-4 py-2 rounded-md font-semibold transition ${
-            sortBy === "category"
-              ? "bg-amber-800 text-white"
-              : "bg-gray-300 hover:bg-gray-400"
-          }`}
+          className="bg-yellow-500 text-black px-4 py-2 rounded-md font-semibold hover:bg-yellow-600"
         >
           Sort by Category
         </button>
