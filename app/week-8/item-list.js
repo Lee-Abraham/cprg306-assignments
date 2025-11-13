@@ -53,7 +53,7 @@ export default function ItemList({ items, onItemSelect }) {
           <Item
             key={item.id}
             item={item}
-            onSelect={() => onItemSelect(item)} // ✅ make item clickable
+            onSelect={() => onItemSelect(item)} 
           />
         ))}
       </ul>
