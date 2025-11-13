@@ -1,6 +1,7 @@
+"use client";
+
 // Part 3: auth-context code starts
 
-"use client";
 
 import { useContext, createContext, useState, useEffect } from "react";
 import {

@@ -1,6 +1,6 @@
-// Part 4: layout code starts
-
 'use client';
+
+// Part 4: layout code starts
 
 import { AuthContextProvider } from "./_utils/auth-context";
 
