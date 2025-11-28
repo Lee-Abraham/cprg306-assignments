@@ -1,18 +1,14 @@
 "use client";
 
-/* eslint-disable react-hooks/exhaustive-deps */
-/* eslint-disable @next/next/no-img-element */
-
 import { useState, useEffect } from "react";
 import React from "react";
 
 export default function MealIdeas({ ingredient }) {
   const [meals, setMeals] = useState([]);
 
-  // API fetcher
+  //API for the Meal via chosen ingredient
   async function fetchMealIdea(ingredient) {
     if (!ingredient) return [];
-
     try {
       const response = await fetch(
         `https://www.themealdb.com/api/json/v1/1/filter.php?i=${ingredient}`
@@ -39,7 +35,6 @@ export default function MealIdeas({ ingredient }) {
       <h2 className="text-2xl font-bold mb-4 text-center text-yellow-500">
         Meal Ideas {ingredient ? `for "${ingredient}"` : ""}
       </h2>
-
       {ingredient === "" ? (
         <p className="text-gray-400 text-center">
           Select an item to see meal ideas.

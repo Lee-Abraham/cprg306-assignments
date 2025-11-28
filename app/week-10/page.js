@@ -1,48 +1,65 @@
 "use client";
 
-import { gitHubSignIn } from "../_utils/auth-context";
+import Link from "next/link";
+import { useUserAuth } from "./_utils/auth-context";
 
-export default function Week10LoginPage() {
-  const handleSignIn = async () => {
+export default function Page() {
+  const { user, gitHubSignIn, firebaseSignOut } = useUserAuth();
+
+  // Handle GitHub Sign In
+  const handleLogin = async () => {
     try {
       await gitHubSignIn();
     } catch (error) {
-      alert("Sign in failed: " + error.message);
+      console.error("Error signing in:", error);
+    }
+  };
+
+  // Handle Logout
+  const handleLogout = async () => {
+    try {
+      await firebaseSignOut();
+    } catch (error) {
+      console.error("Error signing out:", error);
     }
   };
 
   return (
-    <main
-      style={{
-        backgroundColor: "black",
-        color: "white",
-        height: "100vh",
-        width: "100vw",
-        display: "flex",
-        flexDirection: "column",
-        justifyContent: "center",
-        alignItems: "center",
-        gap: "1rem",
-      }}
-    >
-      <h1 style={{ fontWeight: "bold", fontSize: "3rem" }}>
-        Shopping List App
-      </h1>
+    <main className="text-center m-24 bg-amber-800 p-24  rounded-2xl">
+      {!user ? (
+        <>
+          <h1 className="text-3xl">Shopping List App</h1>
 
-      <button
-        onClick={handleSignIn}
-        style={{
-          backgroundColor: "#222",
-          color: "white",
-          border: "1px solid white",
-          padding: "10px 20px",
-          borderRadius: "8px",
-          fontSize: "1.2rem",
-          cursor: "pointer",
-        }}
-      >
-        Sign in with GitHub
-      </button>
+          <button
+            className="mt-4 bg-amber-200 text-black p-3 rounded-3xl hover:bg-amber-400 hover:text-white"
+            onClick={handleLogin}
+          >
+            Sign in with GitHub
+          </button>
+        </>
+      ) : (
+        <>
+          <h1 className="text-3xl">Shopping List App</h1>
+          <p className="mt-2">
+            Signed in as: {user.displayName || "User"} {user.email}
+          </p>
+          <br />
+          <Link
+            className="mt-4 bg-amber-200 text-black p-3 rounded-3xl hover:bg-amber-400 hover:text-white"
+            href="/week-10/shopping-list"
+          >
+            Continue to your Shopping List
+          </Link>
+          <br />
+          <br />
+          <button
+            className="bg-red-500  text-black rounded-2xl p-2  hover:bg-red-600 hover:text-white"
+            onClick={handleLogout}
+          >
+            Sign out
+          </button>
+        </>
+      )}
     </main>
   );
 }

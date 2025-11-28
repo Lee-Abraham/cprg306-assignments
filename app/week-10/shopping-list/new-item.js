@@ -1,5 +1,4 @@
 "use client";
-
 import { useState } from "react";
 
 export default function NewItem({ onAddItem }) {
@@ -7,26 +6,29 @@ export default function NewItem({ onAddItem }) {
   const [name, setName] = useState("");
   const [category, setCategory] = useState("Produce");
 
+  // Increment quantity
   function incrementQuantity() {
-    if (quantity < 20) setQuantity(quantity + 1);
+    if (quantity < 100) {
+      setQuantity(quantity + 1);
+    }
   }
 
+  // Decrement quantity
   function decrementQuantity() {
-    if (quantity > 1) setQuantity(quantity - 1);
+    if (quantity > 1) {
+      setQuantity(quantity - 1);
+    }
   }
 
+  // Submit handler
   const handleSubmit = (e) => {
     e.preventDefault();
-
     const item = {
-      id: Date.now().toString() + Math.floor(Math.random() * 1000).toString(),
       name,
       quantity,
       category: category.toLowerCase(),
     };
-
     onAddItem(item);
-
     setName("");
     setQuantity(1);
     setCategory("Produce");
@@ -72,7 +74,7 @@ export default function NewItem({ onAddItem }) {
               className={`font-bold rounded-[10px] px-4 py-2 ${
                 quantity === 1
                   ? "bg-gray-400 cursor-not-allowed"
-                  : "bg-red-600 text-black hover:bg-[#660000]"
+                  : "bg-red-600 text-black hover:bg-[#660000] cursor-pointer"
               }`}
             >
               -
@@ -85,11 +87,11 @@ export default function NewItem({ onAddItem }) {
             <button
               type="button"
               onClick={incrementQuantity}
-              disabled={quantity === 20}
+              disabled={quantity === 100}
               className={`font-bold rounded-[10px] px-4 py-2 ${
-                quantity === 20
+                quantity === 100
                   ? "bg-gray-400 cursor-not-allowed"
-                  : "bg-green-600 text-black hover:bg-[#006400]"
+                  : "bg-green-600 text-black hover:bg-[#006400] cursor-pointer"
               }`}
             >
               +

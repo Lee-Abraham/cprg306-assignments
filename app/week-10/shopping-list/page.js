@@ -1,67 +1,111 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { useUserAuth } from "../../_utils/auth-context";
-import { getItems, addItem } from "../shopping-list/shopping-list-service";
-
-import ItemList from "./item-list";
+import { useState, useEffect } from "react";
+import { useUserAuth } from "../_utils/auth-context";
 import NewItem from "./new-item";
+import ItemList from "./item-list";
 import MealIdeas from "./meal-ideas";
+import {
+  getItems,
+  addItem as addItemService,
+  deleteItem as deleteItemService,
+} from "../_services/shopping-list-service";
 
 export default function ShoppingListPage() {
-  const { user, firebaseSignOut } = useUserAuth();
+  const { user } = useUserAuth();
   const [items, setItems] = useState([]);
-  const [selectedItemName, setSelectedItemName] = useState("");
+  const [selectedIngredient, setSelectedIngredient] = useState("");
 
-  useEffect(() => {
-    if (!user) window.location.href = "/week10";
-  }, [user]);
-
-  useEffect(() => {
-    async function load() {
-      if (!user) return;
-      const data = await getItems(user.uid);
-      setItems(data);
+  // load items for current user
+  async function loadItems(uid) {
+    if (!uid) {
+      setItems([]);
+      return;
     }
-    load();
-  }, [user]);
+    const results = await getItems(uid);
+    setItems(results);
+  }
 
+  useEffect(() => {
+    if (user?.uid) {
+      loadItems(user.uid);
+    } else {
+      setItems([]);
+    }
+  }, [user?.uid]);
+
+  // handle add item - optimistic update
   async function handleAddItem(item) {
-    const id = await addItem(user.uid, item);
-    setItems((prev) => [...prev, { id, ...item }]);
+    if (!user?.uid) {
+      console.error("No user logged in");
+      return;
+    }
+
+    // show item immediately with a temporary ID
+    const tempId = Date.now().toString();
+    const optimisticItem = { id: tempId, ...item };
+    setItems((prev) => [...prev, optimisticItem]);
+
+    try {
+      // write to Firestore
+      const newId = await addItemService(user.uid, item);
+
+      // replace tempId with real Firestore ID
+      setItems((prev) =>
+        prev.map((i) => (i.id === tempId ? { ...i, id: newId } : i))
+      );
+    } catch (err) {
+      console.error("Failed to add item:", err);
+      // rollback if Firestore fails
+      setItems((prev) => prev.filter((i) => i.id !== tempId));
+    }
+  }
+
+  // delete item - optimistic update
+  async function handleDeleteItem(itemId) {
+    if (!user?.uid) return;
+
+    // remove immediately from local state
+    setItems((prev) => prev.filter((i) => i.id !== itemId));
+
+    // clear selection if it matched deleted item
+    if (selectedIngredient) {
+      const deletedItem = items.find((it) => it.id === itemId);
+      if (deletedItem && deletedItem.name === selectedIngredient) {
+        setSelectedIngredient("");
+      }
+    }
+
+    try {
+      await deleteItemService(user.uid, itemId);
+    } catch (err) {
+      console.error("Failed to delete item:", err);
+      // rollback if Firestore fails (re-add item)
+      await loadItems(user.uid);
+    }
+  }
+
+  function handleSelectItem(item) {
+    setSelectedIngredient(item.name || "");
   }
 
   return (
-    <main className="min-h-screen bg-black text-white">
-      <div className="max-w-6xl mx-auto p-6">
-        <div className="rounded-lg p-6" style={{ backgroundColor: "#071226" }}>
-          <div className="flex flex-col md:flex-row gap-6">
-            <div className="w-full md:w-1/2">
-              <h1 className="text-2xl font-bold mb-4">Shopping List</h1>
+    <main className="p-8">
+      <h1 className="text-3xl font-bold text-center mb-6">
+        Your Shopping List
+      </h1>
 
-              <NewItem onAddItem={handleAddItem} />
+      <NewItem onAddItem={handleAddItem} />
 
-              <ItemList
-                items={items}
-                onItemSelect={(item) => setSelectedItemName(item.name || item)}
-              />
-            </div>
+      <ItemList
+        items={items}
+        onItemSelect={handleSelectItem}
+        onItemDelete={handleDeleteItem}
+      />
 
-            <div className="w-full md:w-1/2">
-              <h2 className="text-lg font-semibold mb-2">Meal Ideas</h2>
-
-              <div
-                className="rounded-md p-4"
-                style={{ backgroundColor: "#0f1724", minHeight: 260 }}
-              >
-                <MealIdeas ingredient={selectedItemName} />
-              </div>
-            </div>
-          </div>
-        </div>
+      <div className="mt-8">
+        <MealIdeas ingredient={selectedIngredient} />
       </div>
-
-      <div className="h-80 bg-black" />
     </main>
   );
 }

@@ -1,18 +1,24 @@
 "use client";
-
 import { useState } from "react";
 import Item from "./item";
 
-export default function ItemList({ items, onItemSelect }) {
+export default function ItemList({ items, onItemSelect, onItemDelete }) {
   const [sortBy, setSortBy] = useState("name");
-
   let sortedItems = [...items];
 
   // SORT ITEMS
   if (sortBy === "name") {
-    sortedItems.sort((a, b) => a.name.localeCompare(b.name));
+    sortedItems.sort((a, b) => {
+      if (a.name > b.name) return 1;
+      if (a.name < b.name) return -1;
+      return 0;
+    });
   } else if (sortBy === "category") {
-    sortedItems.sort((a, b) => a.category.localeCompare(b.category));
+    sortedItems.sort((a, b) => {
+      if (a.category > b.category) return 1;
+      if (a.category < b.category) return -1;
+      return 0;
+    });
   }
 
   return (
@@ -29,7 +35,6 @@ export default function ItemList({ items, onItemSelect }) {
         >
           Sort by Name
         </button>
-
         <button
           onClick={() => setSortBy("category")}
           className={`px-4 py-2 rounded-md font-semibold transition ${
@@ -42,10 +47,15 @@ export default function ItemList({ items, onItemSelect }) {
         </button>
       </div>
 
-      {/* LIST OF ITEMS */}
+      {/* FOR LISTS OF THE ITEMS */}
       <ul className="w-full space-y-4">
         {sortedItems.map((item) => (
-          <Item key={item.id} item={item} onSelect={() => onItemSelect(item)} />
+          <Item
+            key={item.id}
+            item={item}
+            onSelect={(it) => onItemSelect && onItemSelect(it)}
+            onDelete={(id) => onItemDelete && onItemDelete(id)}
+          />
         ))}
       </ul>
     </section>

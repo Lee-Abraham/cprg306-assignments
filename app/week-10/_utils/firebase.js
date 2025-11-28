@@ -1,3 +1,6 @@
+// Part 2: Firebase code starts
+
+// Importing the functions
 import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
@@ -12,7 +15,9 @@ const firebaseConfig = {
   measurementId: "G-E4HYHWYL8T",
 };
 
+// Initialize Firebase
 const app = initializeApp(firebaseConfig);
-
 export const auth = getAuth(app);
 export const db = getFirestore(app);
+
+// Part 2: Firebase code ends
